@@ -1,4 +1,4 @@
-API 명세서 \n
+API 명세서
 
 
 https://documenter.getpostman.com/view/54785324/2sBXwyFRq9
