@@ -1,6 +1,5 @@
 package com.example.scheduleproject.entity;
 
-
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -8,18 +7,18 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
-@Table(name = "schedules")
+@Table(name = "comments")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Schedule extends BaseEntity {
+public class Comment extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 30, nullable = false)
-    private String title;
+    @Column
+    private Long scheduleId;
 
-    @Column(length = 200, nullable = false)
+    @Column(length = 100, nullable = false)
     private String contents;
 
     @Column(length = 12, nullable = false)
@@ -28,20 +27,15 @@ public class Schedule extends BaseEntity {
     @Column(length = 60, nullable = false)
     private String pw;
 
-    public Schedule(String title, String contents, String authorName, String pw) {
+    public Comment(Long scheduleId, String contents, String authorName, String pw) {
 
-        if (title.isEmpty() || contents.isEmpty() || authorName.isEmpty() || pw.isEmpty()) {
+        if (scheduleId == 0 || contents.isEmpty() || authorName.isEmpty() || pw.isEmpty()) {
             throw new IllegalArgumentException("유효하지 않은 요청 입니다.");
         }
 
-        this.title = title;
+        this.scheduleId = scheduleId;
         this.contents = contents;
         this.authorName = authorName;
         this.pw = pw;
-    }
-
-    public void update(String title, String authorName) {
-        this.title = title;
-        this.authorName = authorName;
     }
 }

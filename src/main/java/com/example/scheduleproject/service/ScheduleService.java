@@ -1,7 +1,9 @@
 package com.example.scheduleproject.service;
 
-import com.example.scheduleproject.dto.*;
+import com.example.scheduleproject.dto.Comment.GetCommentResponse;
+import com.example.scheduleproject.dto.Schedule.*;
 import com.example.scheduleproject.entity.Schedule;
+import com.example.scheduleproject.repository.CommentRepository;
 import com.example.scheduleproject.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,13 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
+    private final CommentRepository commentRepository;
 
     @Transactional
     public CreateScheduleResponse save(CreateScheduleRequest request) {
@@ -44,11 +46,26 @@ public class ScheduleService {
         Schedule schedule = scheduleRepository.findById(id).orElseThrow(
                 ()->new IllegalStateException("존재하지 않는 일정 입니다.")
         );
+
+        List<GetCommentResponse> commentResList = commentRepository
+                .findByScheduleId(schedule.getId())
+                .stream()
+                .map(comment -> new GetCommentResponse(
+                        comment.getScheduleId(),
+                        comment.getId(),
+                        comment.getContents(),
+                        comment.getAuthorName(),
+                        comment.getCreatedAt(),
+                        comment.getModifiedAt()
+                ))
+                .toList();
+
         return new GetScheduleResponse(
                 schedule.getId(),
                 schedule.getTitle(),
                 schedule.getContents(),
                 schedule.getAuthorName(),
+                commentResList,
                 schedule.getCreatedAt(),
                 schedule.getModifiedAt()
         );
@@ -67,11 +84,25 @@ public class ScheduleService {
 
         List<GetScheduleResponse> dtos = new ArrayList<>();
         for (Schedule schedule : schedules) {
+            List<GetCommentResponse> commentResList = commentRepository
+                    .findByScheduleId(schedule.getId())
+                    .stream()
+                    .map(comment -> new GetCommentResponse(
+                            comment.getScheduleId(),
+                            comment.getId(),
+                            comment.getContents(),
+                            comment.getAuthorName(),
+                            comment.getCreatedAt(),
+                            comment.getModifiedAt()
+                    ))
+                    .toList();
+
             GetScheduleResponse dto = new GetScheduleResponse(
                     schedule.getId(),
                     schedule.getTitle(),
                     schedule.getContents(),
                     schedule.getAuthorName(),
+                    commentResList,
                     schedule.getCreatedAt(),
                     schedule.getModifiedAt()
             );

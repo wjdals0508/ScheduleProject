@@ -1,11 +1,11 @@
-package com.example.scheduleproject.dto;
+package com.example.scheduleproject.dto.Schedule;
 
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Getter
-public class GetScheduleResponse {
+public class UpdateScheduleResponse {
 
     private final Long id;
     private final String title;
@@ -14,7 +14,7 @@ public class GetScheduleResponse {
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
 
-    public GetScheduleResponse(long id, String title, String contents, String authorName, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+    public UpdateScheduleResponse(Long id, String title, String contents, String authorName, LocalDateTime createdAt, LocalDateTime modifiedAt) {
         this.id = id;
         this.title = title;
         this.contents = contents;
