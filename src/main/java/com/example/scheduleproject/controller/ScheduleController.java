@@ -16,6 +16,7 @@ public class ScheduleController {
 
     private final ScheduleService scheduleService;
 
+    // 일정 생성
     @PostMapping("/schedules")
     public ResponseEntity<CreateScheduleResponse> create(
             @RequestBody CreateScheduleRequest request) {
@@ -23,6 +24,7 @@ public class ScheduleController {
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
+    // 일정 단건 조회
     @GetMapping("/schedules/{id}")
     public ResponseEntity<GetScheduleResponse> getOne(
             @PathVariable Long id) {
@@ -30,6 +32,7 @@ public class ScheduleController {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
+    // 일정 다수 조회 (작성자명 입력 가능)
     @GetMapping("/schedules")
     public ResponseEntity<List<GetScheduleResponse>> getAll(
             @RequestParam(required = false) String authorName) {
@@ -37,6 +40,7 @@ public class ScheduleController {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
+    // 일정 수정
     @PutMapping("/schedules/{id}")
     public ResponseEntity<UpdateScheduleResponse> update(
             @PathVariable Long id,
@@ -45,6 +49,7 @@ public class ScheduleController {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
+    // 일정 삭제
     @DeleteMapping("/schedules/{id}")
     public ResponseEntity<UpdateScheduleResponse> delete(
             @PathVariable Long id,

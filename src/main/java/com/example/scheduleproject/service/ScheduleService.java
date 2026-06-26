@@ -47,6 +47,7 @@ public class ScheduleService {
                 ()->new IllegalStateException("존재하지 않는 일정 입니다.")
         );
 
+        // dto에 댓글 리스트 추가
         List<GetCommentResponse> commentResList = commentRepository
                 .findByScheduleId(schedule.getId())
                 .stream()
@@ -84,6 +85,7 @@ public class ScheduleService {
 
         List<GetScheduleResponse> dtos = new ArrayList<>();
         for (Schedule schedule : schedules) {
+            // dto에 댓글 리스트 추가
             List<GetCommentResponse> commentResList = commentRepository
                     .findByScheduleId(schedule.getId())
                     .stream()

@@ -16,6 +16,7 @@ public class CommentController {
 
     private final CommentService commentService;
 
+    // 댓글 생성
     @PostMapping("/comments")
     public ResponseEntity<CreateCommentResponse> create(
             @RequestBody CreateCommentRequest request) {
